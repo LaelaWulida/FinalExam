@@ -15,30 +15,42 @@ import com.example.finalexam.database.Barang;
 
 import java.util.ArrayList;
 
+//menambahkan file BarangAdapter yang akan kita gunakan untuk data binding dengan RecyclerView
 public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.BarangViewHolder> {
+    //ArrayList  adalah  kelas  yang  memungkinkan  pembuatan  list  objek  array  yang  ukurannya dapat berubah secara dinamis
+    // atau bisa dibilang ukuran ArrayList dapat berubah sesuai dengan jumlah data yang dimasukkan.
     private ArrayList<Barang> listData;
 
     public BarangAdapter(ArrayList<Barang> listData) {
         this.listData = listData = listData;
     }
 
+    //kelas turunan
     @Override
+    //metode ini dipanggil ketika ViewHolder kustom harus diinisialisasi. Kita menentukan layout yang harus digunakan masing-masing item dari RecyclerView.
+    // Hal ini dilakukan oleh memompa layout menggunakan LayoutInflater, melewatkan output ke constructor dari ViewHolder kustom.
+    //onViewCreated() hanya dipanggil jika view dari onCreateView() tidak null
     public BarangViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        //menghubungkan layout inflate yang telah kita buat dengan adapter
         LayoutInflater layoutInf = LayoutInflater.from(parent.getContext());
         View view = layoutInf.inflate(R.layout.row_data_barang, parent, false);
         return new BarangViewHolder(view);
     }
 
     @Override
+    //Metode ini sangat mirip dengan metode getView dari adapter ListView
+    //di sini adalah di mana Anda harus menetapkan nilai-nilai dari field nama pembeli, nama barang, jumlah bayar, harga, dan uang bayar dari CardView.
     public void onBindViewHolder(BarangViewHolder holder, int position) {
         String np,nb,jb, harga,uangbyr;
 
+        //get(position) untuk mengembalikan posisi cursor saat ini dalam rangkaian baris.
         np = listData.get(position).getNamapembeli();
         nb = listData.get(position).getNamabarang();
         jb = listData.get(position).getJumlahbeli();
         harga = listData.get(position).getHarga();
         uangbyr = listData.get(position).getUangbayar();
 
+        //mengatur warna, dan size dari text
         holder.txtnmpem.setTextColor(Color.BLUE);
         holder.txtnmpem.setTextSize(20);
         holder.txtnmpem.setText(np);
@@ -48,10 +60,13 @@ public class BarangAdapter extends RecyclerView.Adapter<BarangAdapter.BarangView
     }
 
     @Override
+    //mengembalikan jumlah entri dalam database
+    // list data tidak boleh null
     public int getItemCount() {
         return (listData != null)?listData.size() : 0;
     }
 
+    //Di dalam constructor dari ViewHolder kustom kita, menginisialisasi views yang termasuk ke dalam item dari RecyclerView kita.
     public class BarangViewHolder extends RecyclerView.ViewHolder {
         private CardView cardku;
         private TextView txtnmpem, txtnmbrg, txtjmlbrg;
